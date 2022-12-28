@@ -1,11 +1,12 @@
 import Head from "next/head";
 import Image from "next/image";
+import Link from "next/link";
 import { Inter } from "@next/font/google";
 import styles from "../styles/Home.module.css";
 
 const inter = Inter({ subsets: ["latin"] });
 
-export default function Home() {
+export default function Home({ data }) {
   return (
     <>
       <Head>
@@ -23,40 +24,27 @@ export default function Home() {
         </nav>
       </header>
       <main className={styles.main}>
-        <a href="">
-          <img />
-          <h2>Events In London</h2>
-          <p>
-            Lorem Ipsum is simply dummy text of the printing and typesetting
-            industry. Lorem Ipsum has been the industry's standard dummy text
-            ever since the 1500s, when an unknown printer took a galley of type
-            and scrambled it to make a type specimen book.
-          </p>
-        </a>
-        <a href="">
-          <img />
-          <h2>Events In San Franciso</h2>
-          <p>
-            Lorem Ipsum is simply dummy text of the printing and typesetting
-            industry. Lorem Ipsum has been the industry's standard dummy text
-            ever since the 1500s, when an unknown printer took a galley of type
-            and scrambled it to make a type specimen book.
-          </p>
-        </a>
-        <a href="">
-          <img />
-          <h2>Events In Barcelona</h2>
-          <p>
-            Lorem Ipsum is simply dummy text of the printing and typesetting
-            industry. Lorem Ipsum has been the industry's standard dummy text
-            ever since the 1500s, when an unknown printer took a galley of type
-            and scrambled it to make a type specimen book.
-          </p>
-        </a>
+        {data.map((event) => (
+          <Link key={event.id} href={`/events/${event.id}`}>
+            <Image src={event.image} width={200} height={200} />
+            <h2>{event.title}</h2>
+            <p>{event.description}</p>
+          </Link>
+        ))}
       </main>
       <footer className={styles.footer}>
         <p>@Buffone Development - A Next.js Project</p>
       </footer>
     </>
   );
+}
+
+export async function getServerSideProps() {
+  const { events_categories } = await import("/data/data.json");
+
+  return {
+    props: {
+      data: events_categories,
+    },
+  };
 }
