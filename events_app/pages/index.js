@@ -1,8 +1,6 @@
 import Head from "next/head";
-import Image from "next/image";
-import Link from "next/link";
+import { HomePage } from "../src/components/home/homePage";
 import { Inter } from "@next/font/google";
-import styles from "../styles/Home.module.css";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -15,26 +13,7 @@ export default function Home({ data }) {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <header>
-        <nav>
-          <img />
-          <Link href="/">Home</Link>
-          <Link href="/events">Events</Link>
-          <Link href="/about-us">About Us</Link>
-        </nav>
-      </header>
-      <main className={styles.main}>
-        {data.map((event) => (
-          <Link key={event.id} href={`/events/${event.id}`}>
-            <Image src={event.image} width={200} height={200} />
-            <h2>{event.title}</h2>
-            <p>{event.description}</p>
-          </Link>
-        ))}
-      </main>
-      <footer className={styles.footer}>
-        <p>@Buffone Development - A Next.js Project</p>
-      </footer>
+      <HomePage data={data} />
     </>
   );
 }
