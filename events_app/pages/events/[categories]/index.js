@@ -1,10 +1,10 @@
 import Image from "next/image";
 import Link from "next/link";
 
-const EventsCategoryPage = ({ data }) => {
+const EventsCategoryPage = ({ data, pageName }) => {
   return (
     <>
-      <h1>Event Page</h1>
+      <h1>Events in {pageName}</h1>
       <div>
         {data.map((event) => (
           <Link key={event.id} href={`/events/${event.city}/${event.id}`}>
@@ -49,6 +49,6 @@ export async function getStaticProps(context) {
   // console.log(data);
 
   return {
-    props: { data },
+    props: { data, pageName: id },
   };
 }
